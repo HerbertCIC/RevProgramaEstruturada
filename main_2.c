@@ -16,17 +16,17 @@
 
 int main(void) { // Ponto de entrada do Programa 
   
-  printf("Declaração de Variáveis\n");
-  int a;        // declarando uma variável de tipo inteiro
-  a = 1;        // inicializando a variável
-  // Modificadores 
-  long int b = 2;  // declarando e inicializando
-  unsigned int c, d;  // declarando multiplas variáveis 
-  short int e;   
-  unsigned long int f = 4, g;
-  // Lembrandop da necessidade de inicializar as variáveis
+	printf("Declaração de Variáveis\n");
+	int a;        // declarando uma variável de tipo inteiro
+	a = 1;        // inicializando a variável
+	// Modificadores 
+	long int b = 2;  // declarando e inicializando
+	unsigned int c, d;  // declarando multiplas variáveis 
+	short int e;   
+	unsigned long int f = 4, g;
+	// Lembrando da necessidade de inicializar as variáveis
 	printf("Declaração e Inicialização de Variáveis\n");
-  printf("Variáveis int: %d, %ld, %u, %u, %d, %lu, %lu \n", a, b, c, d, e, f, g);
+  	printf("Variáveis int: %d, %ld, %u, %u, %d, %lu, %lu \n", a, b, c, d, e, f, g);
 	printf("________________________________________\n");
 	//Operadores com int
 	printf("Operadores con int\n");
@@ -39,9 +39,28 @@ int main(void) { // Ponto de entrada do Programa
 	printf("a = %d, a1 = %d, a2 = %d\n", a, a1, a2);
 	printf("a3 = %d, a4 = %d, a5 = %d\n", a3, a4, a5);
 	printf("________________________________________\n");
-	//Operadores Aritméticos
-	printf("Operadores binarios\n");
 	// Operadores binários
+	printf("Operadores binarios\n");
+	int x = 0b00001100;//12 decimal
+	int y = 0b00001010;//10 decimal
+ 	printf("%d & %d = %d\n", x, y, x & y);// 00001000  AND bit a bit
+	printf("%d | %d = %d\n", x, y, x | y);// 00001110	OR bit a bit
+	printf("%d ^ %d = %d\n", x, y, x ^ y);// 00000110	XOR bit a bit (OU exclusivo)
+	printf("~%d = %d\n", x, ~y);// 11110011 NOT bit a bit (complemento de 1)(unário)									
+	int i = 1;
+	//delocamento de bits à esquerda
+	for(int j=0; j<4; j++){
+		i = i << 1; // deslocamento i de 1 à esquerda, que é o mesmo que multiplicar por 2
+		printf("deslocamento à esquerda %d: %d\n", j, i);
+	}
+	//delocamento de bits à direita
+	for(int j=0; j<4; j++){
+		i = i >> 1; // deslocamento i de 1 à direita, que é o mesmo que dividir por 2
+		printf("deslocamento à direita %d: %d\n", j, i);
+	}
+	printf("________________________________________\n");
+	//Operadores Aritméticos
+	printf("Operadores Aritméticos\n");
 	a = a1 + a2; //adição
 	printf("%d + %d = %d\n", a1, a2, a);
 	a3 = a2 - a4; //substração
@@ -55,7 +74,7 @@ int main(void) { // Ponto de entrada do Programa
 	a = 5 / 2; //Divisão inteira (truncada)
 	printf("5 / 2 = %d\n", a);
 	a = 5 % 2; //Resto da divisão
-	printf("5 \%% 2 = %d\n", a);
+	printf("5 %% 2 = %d\n", a);
 	printf("________________________________________\n");
 	// Operadores de incremento e decremento
 	printf("Operadores de Incremento e decremento\n");
