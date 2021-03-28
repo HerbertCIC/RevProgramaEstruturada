@@ -9,7 +9,7 @@ int main(void) { // Ponto de entrada do Programa
   // Modificadores 
   double y = 2.0;  	// declarando e inicializando
   long double  z= 4.0;
-  // Lembrandop da necessidade de inicializar as variáveis
+  // Lembrando da necessidade de inicializar as variáveis
   
 
 	printf("Declaração e Inicialização de Variáveis\n");
