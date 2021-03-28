@@ -8,6 +8,7 @@ int fatRecursiva(int n);
 int fat(int n);
 
 int main(void) { // Ponto de entrada do Programa 
+  int a,b;
 
   printf("Trabalhando com Recursividade\n");
   printf("Usando a função soma recursiva\n");

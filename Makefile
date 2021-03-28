@@ -4,7 +4,7 @@ CFLAGS = -O2 -lm
 
 all: 	exemplo_00 exemplo_01 exemplo_02 exemplo_03 \
 			exemplo_04 exemplo_05 exemplo_06 exemplo_07 \
-			exemplo_08 exemplo_09 exemplo_10
+			exemplo_08 exemplo_09 exemplo_10 exemplo_11 
 
 exemplo_00: main.c
 	$(CC) $(CFLAGS) main.c -o exemplo_00
@@ -38,6 +38,9 @@ exemplo_09: main_10.c
 
 exemplo_10: main_11.c
 	$(CC) $(CFLAGS) main_11.c -o exemplo_10
+
+exemplo_11: main_12.c
+	$(CC) $(CFLAGS) main_12.c -o exemplo_11
 
 clean:
 	rm exemplo_*

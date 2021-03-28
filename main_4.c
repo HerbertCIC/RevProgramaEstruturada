@@ -56,7 +56,7 @@ int main(void) { // Ponto de entrada do Programa
   srand(time(NULL)); 
   int num = 1 + rand() % 100;
   int chute, chutePC, cont=0,contPC=0, op, left=1, right=100; 
-	printf("\nPensei em um número inteiro entre 1 100 (incluidos) tente adivinhar (10 tentativas)...\n");
+	printf("\nPensei em um número inteiro entre 1 100 (incluidos) tente adivinhar...\n");
   //Usuario
   do{
     cont++;
