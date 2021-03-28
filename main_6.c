@@ -6,9 +6,7 @@
 
 int *GerarVetorNaoRepetido(int, int, int, int);
 void retirarRepeticoes(int *, int);
-void bubble_sort (int vetor[], int n);
 void printVet(int *,int);
-int gerarSemente();
 void freeVet(int *);
 void ordenar(int *,int);
 
@@ -47,22 +45,6 @@ int *GerarVetorNaoRepetido(int min, int tam, int qtVezes,int semente){
   }
   return vetor;
 }
-
- /* int *vet;
-  vet = malloc(tam*sizeof(int));
-	if (semente > 0)
-		srand(semente);
-	else if(semente < 0)
-		srand(time(NULL));
-	int dado;
-	for(int i = 1; i <= qtVezes; i++){
-		dado = min + rand()%tam;
-    vet[i]=dado;
-	}
-  retirarRepeticoes(vet,tam);
-  if(strlen(vet)==tam);
-  return vet;
-}*/
 
 void printVet(int *vet,int tam){
   printf("( ");
