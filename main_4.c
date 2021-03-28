@@ -1,6 +1,8 @@
 
 
 #include <stdio.h>
+#include <stdlib.h>
+#include<time.h>
 
 int main(void) { // Ponto de entrada do Programa 
   
@@ -50,43 +52,66 @@ int main(void) { // Ponto de entrada do Programa
 		exp2++;
 	}
 	printf("A primeira potencia de 2 maoir que %d é 2^%d = %d\n", n, exp2, pot2);
-
-	printf("Pense num núero inteiro entre 1 100 (incluidos)\n");
-	int chute = 50, left = 1, right = 100;
-	int cont = 0;
-	int op;
-	do{
-		printf("O número que vc penosu é %d?\n", chute);
-		printf("Digite: \n");
-		printf("0- Para sim;\n");
-		printf("1- Para não, é maior;\n");
-		printf("2- Para não, é menor;\n");
-		err = scanf("%d", &op);
-		cont++;
+  //modificacao a
+  srand(time(NULL)); 
+  int num = 1 + rand() % 100;
+  int chute, chutePC, cont=0,contPC=0, op, left=1, right=100; 
+	printf("\nPensei em um número inteiro entre 1 100 (incluidos) tente adivinhar (10 tentativas)...\n");
+  //Usuario
+  do{
+    cont++;
+    printf("%d tentativa: ", cont);
+    scanf("%d",&chute);
+    if(chute==num){
+      printf("Respota correta!!\nTentativas = %d\n", cont);
+      break;
+    }
+    else if(num>chute)
+      printf("Errou!! é maior!!\n");
+    else
+      printf("Errou!! é menor!!\n"); 
+  }while(1);
+  //Competidor
+  chutePC = left+rand()%right;
+  do{
+    if(num==chutePC)
+        op = 0;
+    else if(num>chutePC)
+          op = 1;
+    else
+          op=2;
+		contPC++;
 		switch(op){
 			case 0:
-				printf("Opa, achei em %d tentativas!!!\n", cont);
+				printf("Competidor encontrou em %d tentativas!!!\n", contPC);
 				break;
 			case 1: 
-				left = chute;
-				chute = (left + right) / 2;
+				left = chutePC;
+				chutePC = (left + right) / 2;
 				break;
 			case 2:
-				right = chute;
-				chute = (left + right) / 2;
+				right = chutePC;
+				chutePC = (left + right) / 2;
 				break;
 			default:
-				printf("Resposta Errada!!!!!\n");
-				cont--;
+				break;
 		}
 	}while (op != 0); 
+
+  if(cont < contPC){
+      printf("Parabéns você adivinhou primeiro!!!\n");
+  }else if(cont > contPC)
+      printf("O Competidor adivinhou primeiro!!\n");
+  else
+    printf("Empate !!\n");
+
 	int soma = 0;
-	for(int i = 1; i <= chute; i++){
+	for(int i = 1; i <= num; i++){
 		soma += i;
 	}
-	printf("A sooma de todos os inteiros de 1 até %d é %d\n", chute, soma);
+	printf("A soma de todos os inteiros de 1 até %d é %d\n", num, soma);
   
-	(soma == chute*(chute+1)/2)?printf("Resposta correta\n"):printf("Resposta errada\n");
+	//(soma == num*(num+1)/2)?printf("Resposta correta\n"):printf("Resposta errada\n");
 
 	return 0;
 
