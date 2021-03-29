@@ -1,53 +1,116 @@
 #include <stdio.h>
 #include <stdlib.h>  	//para poder utilizar a função rand()
 #include <time.h> 		//para poder utilizar a funçao time()	
+#include <string.h>
 
-void jogaOsDados(int *jogo, int min, int tam, int qtVezes, int semente);
-void printJogo(int *jogo, int qtVezes);
+#define QUANT_JOGOS 3
+
+int *GerarVetorNaoRepetido(int, int, int, int);
+void retirarRepeticoes(int *, int);
+void ordenar(int *,int);
+void printVet(int *,int);
+int **mallocMatriz(int linha, int coluna);
+void freeVet(int **, int);
+int compararJogo(int *, int *, int );
+
 
 int main(void) { // Ponto de entrada do Programa 
 
-	printf("Trabalhando com alocação dinâmica\n");
-	printf("A função rand() gera um inteiro entre 0 e RAND_MAX\n");
-	printf("RAND_MAX = %d\n", RAND_MAX);
-	int *jogo = NULL;
-	jogo = (int *) malloc(10*sizeof(int));
-	printf("Simulando 10 lançamentos de um dado:\n");
-	jogaOsDados(jogo, 1, 6, 10, 0);
-	printJogo(jogo, 10);
-	printf("Todas as vezes que rodar este exemplo vai gerar o mesmo resultado!\n");
-	int semente;
-	printf("Entre com a semente para gerar uma nova sequencia: ");
-	int err = scanf("%d", &semente);
-	jogaOsDados(jogo, 1, 6, 10, semente);
-	printJogo(jogo, 10);
-	printf("Sementes diferentes irão gerar resultados diferentes!\n");
-	printf("A mesma semente gera o mesmo resultado!\n");
-	printf("Escolhendo a semente de forma automatica\n");
-	jogaOsDados(jogo, 1, 6, 10, -1);
-	printJogo(jogo, 12);
-	printf("Todas as vezes que rodar este exemplo gera diferentes resultados!\n");
-	free(jogo);
+	printf("MEGA SENNA\n");
+	printf("Sorteando numeros:\n");
+  int **jogadas, semente, quant=6;
+  jogadas = mallocMatriz(6,3);  
+  for(int i=0; i< QUANT_JOGOS;i++){
+    printf("Digite a nova semente: ");
+    scanf("%d", &semente);
+    jogadas[i] = GerarVetorNaoRepetido(1, 60, quant, semente);
+    ordenar(jogadas[i],quant);
+    printVet(jogadas[i],quant);
+  }
+  int rep;
+  rep = compararJogo(jogadas[0],jogadas[1],quant);
+  printf("%d números se repetem em ambos os jogos\n", rep);
+  freeVet(jogadas,6);
 	return 0;
 }
 
-void jogaOsDados(int *jogo, int min, int tam, int qtVezes, int semente){
-	if (semente > 0)
-		srand(semente);
-	else if(semente < 0)
-		srand(time(NULL));
-	for(int i = 0; i < qtVezes; i++){
-		jogo[i] = min + rand()%tam;
-	}
+int **mallocMatriz(int linha, int coluna){
+    int **M;
+    M = malloc(coluna * sizeof(int *));
+    if(M==NULL){
+      printf("Erro!!");
+    }
+    for(int i=0;i<coluna;i++){
+      M[i] = malloc(linha * sizeof(int));
+      if(M[i]==NULL){
+      printf("Erro!!");
+      } 
+    }
+    return M;
+  }
+
+int *GerarVetorNaoRepetido(int min, int tam, int qtVezes,int semente){
+  int *vetor;
+  vetor = malloc(tam*sizeof(int));
+  int i, j, rep;
+  srand(semente);
+  for(i=0;i<qtVezes;i++){
+    do{
+      vetor[i] = min+rand()%tam;
+      rep = 0;
+      for(j=0;j<i;j++){
+        if(vetor[i]==vetor[j]){
+            rep=1;
+            break;
+        }
+      }
+    }while(rep);    
+  }
+  return vetor;
 }
 
-void printJogo(int *jogo, int qtVezes){
-	printf("( ");
-	for(int i = 1; i <= qtVezes; i++){
-		printf("%d", jogo[i-1]);
-		if (i < qtVezes)
+void printVet(int *vet,int tam){
+  printf("( ");
+  for(int i = 0; i < tam; i++){
+		printf("%d", vet[i]);
+		if (i < tam-1)
 			printf(", ");
 		else
 			printf(")\n");
 	}
+}
+
+void freeVet(int **vet,int tam){
+  for(int i=0;i<tam;i++){
+    free(vet[i]);
+  }
+  free(vet);
+}
+
+void ordenar(int *vetor,int tam){
+  int aux;
+  for (int i = 0; i < tam; i++){
+      for (int j = 0; j < tam; j++){
+        if (vetor[i] < vetor[j]){
+            aux = vetor[i];
+            vetor[i] = vetor[j];
+            vetor[j] = aux;
+        }
+    }
+  }
+}
+
+int compararJogo(int *vet_1, int *vet_2, int tam){
+  int sentinela, cont=0;
+  for(int i=0;i<tam;i++){
+    sentinela=0;
+    for(int j=0;j<i;j++)
+      if(vet_1[i] == vet_2[j]){
+        sentinela = 1;
+      }
+    if(sentinela==1)
+      cont++;
+  }
+  return cont;
+
 }

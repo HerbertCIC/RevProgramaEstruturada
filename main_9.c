@@ -1,64 +1,123 @@
 #include <stdio.h>
 #include <stdlib.h>  	//para poder utilizar a função rand()
 #include <time.h> 		//para poder utilizar a funçao time()	
+#include <string.h>
 
 typedef struct{
     int *jogo;  		// núeros sorteados
     int qtVezes;    // quantidade de sorteios
     int min;       	// valor inicial do intervalo
-		int tam;				// tamanho do intervalo
+    int tam;				// tamanho do intervalo
 } tJogo;
 
-void jogaOsDados(tJogo jogo, int semente);
-void printJogo(tJogo jogo);
+#define QUANT_JOGOS 3
+
+int *GerarVetorNaoRepetido(tJogo, int);
+void ordenar(tJogo);
+void printVet(tJogo);
+int *AlocaVet(int);
+void freeVet(int *);
+int compararJogo(tJogo, tJogo);
+
 
 int main(void) { // Ponto de entrada do Programa 
 
-	printf("Trabalhando com tipos de dados e estruturas\n");
-	printf("A função rand() gera um inteiro entre 0 e RAND_MAX\n");
-	printf("RAND_MAX = %d\n", RAND_MAX);
-	// Declarando e Inicializando o jogo
-	tJogo jogo;
-	jogo.qtVezes = 10;
-	jogo.min = 1;
-	jogo.tam = 6;
-	jogo.jogo = (int *) malloc(jogo.qtVezes*sizeof(int));
-	printf("Simulando 10 lançamentos de um dado:\n");
-	jogaOsDados(jogo, 0);
-	printJogo(jogo);
-	printf("Todas as vezes que rodar este exemplo vai gerar o mesmo resultado!\n");
-	int semente;
-	printf("Entre com a semente para gerar uma nova sequencia: ");
-	int err = scanf("%d", &semente);
-	jogaOsDados(jogo, semente);
-	printJogo(jogo);
-	printf("Sementes diferentes irão gerar resultados diferentes!\n");
-	printf("A mesma semente gera o mesmo resultado!\n");
-	printf("Escolhendo a semente de forma automatica\n");
-	jogaOsDados(jogo, -1);
-	printJogo(jogo);
-	printf("Todas as vezes que rodar este exemplo gera diferentes resultados!\n");
-	free(jogo.jogo);
+	printf("MEGA SENNA\n");
+	printf("Sorteando numeros:\n");
+  int semente;
+  tJogo jogadas_1, jogadas_2;
+  jogadas_1.qtVezes = jogadas_2.qtVezes = 6;
+  jogadas_1.tam = jogadas_2.tam = 60;
+  jogadas_1.min = jogadas_2.min = 1;
+  //alocacao
+  jogadas_1.jogo = AlocaVet(jogadas_1.qtVezes);
+  jogadas_2.jogo = AlocaVet(jogadas_2.qtVezes);  
+  //Jogo 1
+  printf("Digite a nova semente: ");
+  scanf("%d", &semente);
+  jogadas_1.jogo = GerarVetorNaoRepetido(jogadas_1,semente);
+  ordenar(jogadas_1);
+  printVet(jogadas_1);
+  //Jogo 2
+  printf("Digite a nova semente: ");
+  scanf("%d", &semente);
+  jogadas_2.jogo = GerarVetorNaoRepetido(jogadas_2,semente);
+  ordenar(jogadas_2);
+  printVet(jogadas_2);
+  //Comparacão
+  int rep;
+  rep = compararJogo(jogadas_1,jogadas_2);
+  printf("%d números se repetem em ambos os jogos\n", rep);
+  /*freeVet(jogadas_1.jogo);
+  freeVet(jogadas_2.jogo);*/
 	return 0;
 }
 
-void jogaOsDados(tJogo jogo, int semente){
-	if (semente > 0)
-		srand(semente);
-	else if(semente < 0)
-		srand(time(NULL));
-	for(int i = 0; i < jogo.qtVezes; i++){
-		jogo.jogo[i] = jogo.min + rand()%jogo.tam;
-	}
+int *AlocaVet(int tam){
+  int *Vet;
+  Vet = (int *)malloc(tam * sizeof(int));
+  if(Vet == NULL){
+    printf("Erro!!");
+  }
+  return Vet;
 }
 
-void printJogo(tJogo jogo){
-	printf("( ");
-	for(int i = 1; i <= jogo.qtVezes; i++){
-		printf("%d", jogo.jogo[i-1]);
-		if (i < jogo.qtVezes)
+int *GerarVetorNaoRepetido(tJogo jogo,int semente){
+  int i, j, rep;
+  srand(semente);
+  for(i=0;i<jogo.qtVezes;i++){
+    do{
+      jogo.jogo[i] = jogo.min+rand()%jogo.tam;
+      rep = 0;
+      for(j=0;j<i;j++){
+        if(jogo.jogo[i]==jogo.jogo[j]){
+            rep=1;
+            break;
+        }
+      }
+    }while(rep);    
+  }
+  return jogo.jogo;
+}
+
+void printVet(tJogo jogo){
+  printf("( ");
+  for(int i = 0; i < jogo.qtVezes; i++){
+		printf("%d", jogo.jogo[i]);
+		if (i < jogo.qtVezes-1)
 			printf(", ");
 		else
 			printf(")\n");
 	}
+}
+
+void freeVet(int *vet){
+  free(vet);
+}
+
+void ordenar(tJogo jogo){
+  int aux;
+  for (int i = 0; i < jogo.qtVezes; i++){
+      for (int j = 0; j < jogo.qtVezes; j++){
+        if (jogo.jogo[i] < jogo.jogo[j]){
+            aux = jogo.jogo[i];
+            jogo.jogo[i] = jogo.jogo[j];
+            jogo.jogo[j] = aux;
+        }
+    }
+  }
+}
+
+int compararJogo(tJogo jogo1,tJogo jogo2){
+  int sentinela, cont=0;
+  for(int i=0;i<jogo1.qtVezes;i++){
+    sentinela=0;
+    for(int j=0;j<jogo2.qtVezes;j++)
+      if(jogo1.jogo[i] == jogo2.jogo[j]){
+        sentinela = 1;
+      }
+    if(sentinela==1)
+      cont++;
+  }
+  return cont;
 }
