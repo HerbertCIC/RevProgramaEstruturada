@@ -10,7 +10,6 @@ typedef struct{
     int tam;				// tamanho do intervalo
 } tJogo;
 
-#define QUANT_JOGOS 3
 
 int *GerarVetorNaoRepetido(tJogo, int);
 void ordenar(tJogo);
