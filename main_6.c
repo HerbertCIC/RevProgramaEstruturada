@@ -7,45 +7,47 @@
 
 int *GerarVetorNaoRepetido(int, int, int, int);
 void retirarRepeticoes(int *, int);
-void printVet(int *,int);
-void freeVet(int *);
 void ordenar(int *,int);
+void printVet(int *,int);
+int **mallocMatriz(int linha, int coluna);
+void freeVet(int **, int);
 int compararJogo(int *, int *, int );
+
 
 int main(void) { // Ponto de entrada do Programa 
 
 	printf("MEGA SENNA\n");
 	printf("Sorteando numeros:\n");
-  int *jogo_1,*jogo_2,*jogo_3, semente;
-
-  printf("Digite a nova semente: ");
-  scanf("%d", &semente);
-  jogo_1 = GerarVetorNaoRepetido(1, 60, 6, semente);
-  ordenar(jogo_1,6);
-  printVet(jogo_1,6);
-
-  printf("Digite a nova semente: ");
-  scanf("%d", &semente);
-  jogo_2 = GerarVetorNaoRepetido(1, 60, 6, semente);
-  ordenar(jogo_2,6);
-  printVet(jogo_2,6);
-
-  printf("Digite a nova semente: ");
-  scanf("%d", &semente);
-  jogo_3 = GerarVetorNaoRepetido(1, 60, 6, semente);
-  ordenar(jogo_3,6);
-  printVet(jogo_3,6);
-
+  int **jogadas, semente, quant=6;
+  jogadas = mallocMatriz(6,3);  
+  for(int i=0; i< QUANT_JOGOS;i++){
+    printf("Digite a nova semente: ");
+    scanf("%d", &semente);
+    jogadas[i] = GerarVetorNaoRepetido(1, 60, quant, semente);
+    ordenar(jogadas[i],quant);
+    printVet(jogadas[i],quant);
+  }
   int rep;
-  rep = compararJogo(jogo_1,jogo_2,6);
+  rep = compararJogo(jogadas[0],jogadas[1],quant);
   printf("%d números se repetem em ambos os jogos\n", rep);
-
-
-  freeVet(jogo_1);
-  freeVet(jogo_2); 
-  freeVet(jogo_3);  
+  freeVet(jogadas,6);
 	return 0;
 }
+
+int **mallocMatriz(int linha, int coluna){
+    int **M;
+    M = malloc(coluna * sizeof(int));
+    if(M==NULL){
+      printf("Erro!!");
+    }
+    for(int i=0;i<coluna;i++){
+      M[i] = malloc(linha * sizeof(int));
+      if(M[i]==NULL){
+      printf("Erro!!");
+      } 
+    }
+    return M;
+  }
 
 int *GerarVetorNaoRepetido(int min, int tam, int qtVezes,int semente){
   int *vetor;
@@ -78,7 +80,10 @@ void printVet(int *vet,int tam){
 	}
 }
 
-void freeVet(int *vet){
+void freeVet(int **vet,int tam){
+  for(int i=0;i<tam;i++){
+    free(vet[i]);
+  }
   free(vet);
 }
 
