@@ -6,7 +6,6 @@
 #define QUANT_JOGOS 3
 
 int *GerarVetorNaoRepetido(int, int, int, int);
-void retirarRepeticoes(int *, int);
 void ordenar(int *,int);
 void printVet(int *,int);
 int **mallocMatriz(int linha, int coluna);
